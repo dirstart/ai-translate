@@ -1,33 +1,18 @@
-import { PropsWithChildren } from "react";
+"use client";
+import { useEffect, useState } from "react";
+import Tree from "@/components/Tree";
+import { treeData } from "./data";
 
-const person = {
-  name: "chp",
-  age: 18,
-  src: "https://i.imgur.com/1bX5QH6.jpg",
-};
-
-const Avatar = ({ src = "" }) => {
-  return <img src={src} alt="" />;
-};
-
-const AvatarReceiveObj = ({ name = "", src = "" }) => {
-  return <img src={src} alt={name}></img>;
-};
-
-const Card = ({ children }: PropsWithChildren) => {
-  return <div className="border-4 border-slate-200 rounded-md">{children}</div>;
-};
-
-export default function Page() {
-  return (
-    <div>
-      just test
-      <Avatar src={person.src} />
-      wtf
-      <AvatarReceiveObj name={person.name} src={person.src} />
-      <Card>
-        <Avatar src={person.src} />
-      </Card>
-    </div>
-  );
+export default function Test() {
+  const [data, setData] = useState(treeData);
+  const [refreshKey, setRefreshKey] = useState(0);
+  useEffect(() => {
+    console.log("🍀🍀🍀🍀", "Tree进行挂载");
+    const interval = setInterval(() => {
+      setRefreshKey(refreshKey + 1);
+      setData(JSON.parse(JSON.stringify(data)));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  return <Tree key={refreshKey} data={data} />;
 }

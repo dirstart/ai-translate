@@ -1,1 +1,4 @@
-export default function Tree({ node }) {}
+// 无限递归树
+export default function Tree({ node }) {
+  // return <div>123</div>;
+}
